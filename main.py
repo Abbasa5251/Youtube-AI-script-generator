@@ -166,24 +166,35 @@ class NotionVideoScriptGenerator:
         - Provide clear value propositions
         - Make some jokes or light-hearted comments to keep it fun
         - Use a friendly, approachable tone
-        - Give code snippets or examples if applicable
+        - Give code snippets or examples for programming topics
 
         Generate the complete script with full dialogue, not just bullet points or outlines.
         """
         
         try:
             response = self.openai_client.chat.completions.create(
-                model="gpt-4",  # You can change to gpt-3.5-turbo for cost savings
+                model="gpt-4",
                 messages=[
-                    {"role": "system", "content": "You are an expert YouTube script writer who creates engaging, well-structured video scripts with proper markdown formatting that maximize viewer retention and engagement. Always write complete dialogue and full scripts, never just outlines or bullet points."},
-                    {"role": "user", "content": prompt}
+                    {
+                        "role": "system", 
+                        "content": "You are an expert YouTube script writer who creates engaging, well-structured video scripts with proper markdown formatting that maximize viewer retention and engagement. Always write complete dialogue and full scripts, never just outlines or bullet points."
+                    },
+                    {
+                        "role": "system", 
+                        "content": "I have a YouTube channel named 'ADev Tutorials' that focuses on Web Development, Programming and AI. Please tailor the script to fit this niche."
+                    },
+                    {
+                        "role": "user", 
+                        "content": prompt
+                    }
                 ],
-                max_tokens=4000,  # Increased for longer, more detailed scripts
+                max_tokens=4000,
                 temperature=0.7
             )
             
             script = response.choices[0].message.content
             logger.info(f"Generated markdown script for '{title}' ({len(script)} characters)")
+            logger.info(f"Script for '{title}'\n{script}")
             return script
             
         except Exception as e:
@@ -203,7 +214,7 @@ class NotionVideoScriptGenerator:
                         "name": "Review"  # Adjust status name as needed
                     }
                 },
-                "Script Generated": {  # Add timestamp (optional - remove if property doesn't exist)
+                "Script Generated": { 
                     "date": {
                         "start": datetime.now().isoformat()
                     }
