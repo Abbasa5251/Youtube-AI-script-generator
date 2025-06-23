@@ -334,7 +334,7 @@ def main():
     logger.info("\nMonitoring your Notion database for videos with YouTube URLs...")
     logger.info("Press Ctrl+C to stop")
 
-    fetcher.run_continuously(check_interval=600)  # Check every 10 minutes
+    fetcher.process_videos() 
 
 if __name__ == "__main__":
     main()
