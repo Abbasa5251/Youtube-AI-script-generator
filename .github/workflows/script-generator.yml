@@ -1,0 +1,24 @@
+name: Run Notion YouTube Script Generator
+
+on:
+    schedule:
+        - cron: "30 23 * * *"
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.x"
+            - name: Install dependencies
+              run: pip install -r requirements.txt
+            - name: Run script
+              env:
+                  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+                  NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+                  NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+              run: python main.py

@@ -557,8 +557,8 @@ def main():
     logger.info("Press Ctrl+C to stop")
 
     # Run once immediately, then continuously
-    # generator.process_videos()
-    generator.run_continuously(check_interval=300)  # Check every 5 minutes
+    generator.process_videos()
+    # generator.run_continuously(check_interval=300)  # Check every 5 minutes
 
 if __name__ == "__main__":
     main()
